@@ -1,7 +1,17 @@
+from bs4 import BeautifulSoup
 import requests
+import sqlite3
 
-response = requests.get('https://gpuscore.top/furmark/')
-result = re
+conn = sqlite3.connect('results.db')
+cursor = conn.cursor()
 
-print(response.json)
-#print(response.text)
+conn.close()
+
+# response = requests.get('https://gpuscore.top/furmark/')
+# soup = BeautifulSoup(response.text, 'html.parser')
+#
+# lst = soup.find_all('tr')
+#
+# for i in range(1, len(lst)):
+#     for l in list(lst[i]):
+#         print(l)
