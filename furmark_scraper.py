@@ -30,12 +30,10 @@ for i in range(1, len(table)):
     ids = re.search(id_pattern, str(temp_lst[2])).group(1)
     gpu = re.search(gpu_pattern, temp_lst[3].text).group(1)
     score = temp_lst[2].text
-    print(score)
     preset = temp_lst[1].text
     time = temp_lst[4].text
 
     cursor.execute("INSERT OR IGNORE INTO furmark (id, gpu, score, preset, time) VALUES (?, ?, ?, ?, ?)", (ids, gpu, score, preset, time))
-    print(ids, gpu, score, preset, time)
 
 conn.commit()
 conn.close()
