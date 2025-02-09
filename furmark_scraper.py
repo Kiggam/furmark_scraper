@@ -3,12 +3,12 @@ import requests
 import sqlite3
 import re
 
-conn = sqlite3.connect('results.db')
+conn = sqlite3.connect('/home/kiggam/Desktop/furmark_scraper/results.db')
 cursor = conn.cursor()
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS furmark(
-    num INTEGER PRIMARY KEY AUTOINCREMENT,
+    num INTEGER PRIMARY KEY,
     id INTEGER UNIQUE,
     gpu TEXT,
     score INTEGER,
@@ -33,7 +33,10 @@ for i in range(1, len(table)):
     preset = temp_lst[1].text
     time = temp_lst[4].text
 
-    cursor.execute("INSERT OR IGNORE INTO furmark (id, gpu, score, preset, time) VALUES (?, ?, ?, ?, ?)", (ids, gpu, score, preset, time))
+    cursor.execute("""
+    INSERT OR IGNORE INTO furmark (id, gpu, score, preset, time) 
+    VALUES ((SELECT COALESCE(MAX(num), 0) + 1 FROM furmark), ?, ?, ?, ?, ?)
+    """, (ids, gpu, score, preset, time))
 
 conn.commit()
 conn.close()
