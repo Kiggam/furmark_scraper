@@ -34,9 +34,9 @@ for i in range(1, len(table)):
     time = temp_lst[4].text
 
     cursor.execute("""
-    INSERT OR IGNORE INTO furmark (id, gpu, score, preset, time) 
-    VALUES ((SELECT COALESCE(MAX(num), 0) + 1 FROM furmark), ?, ?, ?, ?)
-    """, (gpu, score, preset, time))
+    INSERT OR IGNORE INTO furmark (num, id, gpu, score, preset, time) 
+    VALUES ((SELECT COALESCE(MAX(num), 0) + 1 FROM furmark), ?, ?, ?, ?, ?)
+    """, (ids, gpu, score, preset, time))
 
 conn.commit()
 conn.close()
